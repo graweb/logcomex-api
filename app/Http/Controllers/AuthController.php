@@ -29,19 +29,14 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $user = User::create([
+        User::create([
             "name" => $validator->validated()['name'],
             "email" => $validator->validated()['email'],
             "password" => Hash::make($validator->validated()['password']),
         ]);
 
-        $response['user'] = $user->name;
-        $response['email'] = $user->email;
-        $response['token'] = $user->createToken(env('APP_NAME'))->accessToken;
-
         return response()->json([
             "message" => "The user {$validator->validated()['name']} was created.",
-            "data" => $response,
         ], 201);
     }
 
