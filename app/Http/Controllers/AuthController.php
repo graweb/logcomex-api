@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     /**
-     * Register user method
-     * @return response()
+     * Register
      */
     public function register(Request $request)
     {
@@ -36,13 +35,12 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
-            "message" => "The user {$validator->validated()['name']} was created.",
+            "message" => "O usuário {$validator->validated()['name']} foi criado com sucesso.",
         ], 201);
     }
 
     /**
-     * Login user method
-     * @return response()
+     * Login
      */
     public function login(Request $request)
     {
@@ -71,13 +69,25 @@ class AuthController extends Controller
             $response['token'] = $user->createToken(env('APP_NAME'))->accessToken;
 
             return response()->json([
-                "message" => "The user {$user->name} was logged in.",
+                "message" => "O usuário {$user->name} está logado.",
                 "data" => $response,
             ], 201);
         }
 
         return response()->json([
-            "message" => "User unauthenticated."
+            "message" => "Usuário ou senha inválido, tente novamente."
         ], 401);
+    }
+
+    /**
+     * Logout
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+
+        return response()->json([
+            'message' => 'Logout realizado com sucesso!'
+        ], 200);
     }
 }

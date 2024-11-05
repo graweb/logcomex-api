@@ -70,7 +70,7 @@ class ProductController extends Controller
         ]);
 
         return response()->json([
-            "message" => "The product {$validator->validated()['name']} was created.",
+            "message" => "O produto {$validator->validated()['name']} foi criado com sucesso.",
         ], 201);
     }
 
@@ -115,7 +115,7 @@ class ProductController extends Controller
         $product->save();
 
         return response()->json([
-            "message" => "The product {$validator->validated()['name']} was updated.",
+            "message" => "O produto {$validator->validated()['name']} foi atualizado com sucesso.",
         ], 200);
     }
 
@@ -127,7 +127,7 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json([
-            "message" => "The product was deleted.",
+            "message" => "O produto foi removido com sucesso.",
         ], 200);
     }
 }
