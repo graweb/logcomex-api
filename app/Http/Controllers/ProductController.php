@@ -53,7 +53,7 @@ class ProductController extends Controller
             "code" => "required",
             "name" => "required",
             "description" => "required",
-            "quantity" => "required|number",
+            "quantity" => "required|int",
         ]);
 
         if($validator->fails()) {
