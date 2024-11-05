@@ -33,15 +33,28 @@ class ProductController extends Controller
         }
 
         if($request->has('start_date') && $request->has('end_date')) {
-            $startDate = Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay();
-            $endDate = Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay();
-
-            $data = $data->whereBetween('created_at', [$startDate, $endDate]);
+            $data = $data->whereBetween('created_at', [$request->start_date, $request->end_date]);
         }
 
-        return response()->json([
-            "data" => $data->paginate()
-        ], 200);
+        if(filter_var($request->paginate, FILTER_VALIDATE_BOOLEAN)) {
+            return response()->json([
+                "data" => $data->paginate(),
+            ], 200);
+        } else {
+            $data = $data->limit(5)->orderBy('created_at', 'desc');
+
+            $result = [
+                'labels' => $data->pluck('name'),
+                'datasets' => [
+                    [
+                        'backgroundColor' => ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                        'data' => $data->pluck('quantity'),
+                    ],
+                ],
+            ];
+
+            return response()->json($result);
+        }
     }
 
     /**
