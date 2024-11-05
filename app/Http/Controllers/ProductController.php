@@ -95,7 +95,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "code" => "required",
+            "name" => "required",
+            "description" => "required",
+            "quantity" => "required|int",
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                "message" => $validator->errors()->all(),
+            ], 422);
+        }
+
+        $product->code = $validator->validated()['code'];
+        $product->name = $validator->validated()['name'];
+        $product->description = $validator->validated()['description'];
+        $product->quantity = $validator->validated()['quantity'];
+        $product->save();
+
+        return response()->json([
+            "message" => "The product {$validator->validated()['name']} was updated.",
+        ], 200);
     }
 
     /**
@@ -103,6 +124,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return response()->json([
+            "message" => "The product was deleted.",
+        ], 200);
     }
 }
