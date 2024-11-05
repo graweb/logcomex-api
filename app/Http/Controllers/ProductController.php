@@ -32,21 +32,9 @@ class ProductController extends Controller
             $data = $data->where('quantity', '>=', $request->quantity);
         }
 
-        if($request->has('minimum_quantity')) {
-            $data = $data->where('minimum_quantity', '>=', $request->minimum_quantity);
-        }
-
-        if($request->has('amount')) {
-            $data = $data->where('amount', '>=', $request->amount);
-        }
-
-        if($request->has('country')) {
-            $data = $data->where('country', $request->country);
-        }
-
         if($request->has('start_date') && $request->has('end_date')) {
-            $startDate = Carbon::parse($request->start_date, 'America/Sao_Paulo')->copy()->setTime(1, 0, 0)->format('Y-m-d H:i:s');
-            $endDate = Carbon::parse($request->end_date, 'America/Sao_Paulo')->copy()->setTime(23, 59, 59)->format('Y-m-d H:i:s');
+            $startDate = Carbon::createFromFormat('d/m/Y', $request->start_date)->startOfDay();
+            $endDate = Carbon::createFromFormat('d/m/Y', $request->end_date)->endOfDay();
 
             $data = $data->whereBetween('created_at', [$startDate, $endDate]);
         }
