@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,7 +29,26 @@ class ProductController extends Controller
         }
 
         if($request->has('quantity')) {
-            $data = $data->where('quantity', $request->quantity);
+            $data = $data->where('quantity', '>=', $request->quantity);
+        }
+
+        if($request->has('minimum_quantity')) {
+            $data = $data->where('minimum_quantity', '>=', $request->minimum_quantity);
+        }
+
+        if($request->has('amount')) {
+            $data = $data->where('amount', '>=', $request->amount);
+        }
+
+        if($request->has('country')) {
+            $data = $data->where('country', $request->country);
+        }
+
+        if($request->has('start_date') && $request->has('end_date')) {
+            $startDate = Carbon::parse($request->start_date, 'America/Sao_Paulo')->copy()->setTime(1, 0, 0)->format('Y-m-d H:i:s');
+            $endDate = Carbon::parse($request->end_date, 'America/Sao_Paulo')->copy()->setTime(23, 59, 59)->format('Y-m-d H:i:s');
+
+            $data = $data->whereBetween('created_at', [$startDate, $endDate]);
         }
 
         return response()->json([
@@ -67,6 +87,9 @@ class ProductController extends Controller
             "name" => $validator->validated()['name'],
             "description" => $validator->validated()['description'],
             "quantity" => $validator->validated()['quantity'],
+            'minimum_quantity' => $request->minimum_quantity,
+            'amount' => $request->amount,
+            'country' => $request->country,
         ]);
 
         return response()->json([
@@ -112,6 +135,9 @@ class ProductController extends Controller
         $product->name = $validator->validated()['name'];
         $product->description = $validator->validated()['description'];
         $product->quantity = $validator->validated()['quantity'];
+        $product->minimum_quantity = $request->minimum_quantity;
+        $product->amount = $request->amount;
+        $product->country = $request->country;
         $product->save();
 
         return response()->json([

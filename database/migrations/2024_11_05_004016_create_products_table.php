@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name', 200); // Exemplo de coluna VARCHAR
             $table->text('description'); // Exemplo de coluna TEXT
             $table->integer('quantity'); // Exemplo de coluna INTEGER
+            $table->integer('minimum_quantity')->nullable(); // Exemplo de coluna INTEGER
+            $table->decimal('amount', 10,2)->default(0); // Exemplo de coluna DECIMAL
+            $table->string('country')->nullable(); // Exemplo de coluna VARCHAR
             $table->timestamps();
         });
     }

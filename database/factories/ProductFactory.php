@@ -23,6 +23,10 @@ class ProductFactory extends Factory
             'name' => 'Produto ' . $rand,
             'description' => 'Descrição do produto ' . $rand,
             'quantity' => rand(1, 1000),
+            'minimum_quantity' => rand(1, 100),
+            'amount' => fake()->randomFloat(2, 1, 100),
+            'country' => fake()->country(),
+            'created_at' => fake()->dateTimeThisYear(),
         ];
     }
 }
