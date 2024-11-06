@@ -15,7 +15,7 @@ Verifique se o Docker e o Docker Composer estão instalados em sua máquina
 4. Acesse o container onde está o projeto ```docker exec -it logcomex-api-laravel.test-1 sh``` e rode os comandos  
 - ```php artisan migrate```
 - ```php artisan db:seed```
-- ```php artisan passport:client --personal```
+- ```php artisan passport:client --personal``` ou ```php artisan passport:keys```
 5. Caso precise, dê permissão na pasta storage (opcional)
 
 ## Configuração do Projeto (ambiente local - Artisan Serve)
@@ -28,7 +28,7 @@ Verifique se o Docker e o Docker Composer estão instalados em sua máquina
 - ```php artisan key:generate``` 
 - ```php artisan migrate```
 - ```php artisan db:seed```
-- ```php artisan passport:client --personal```
+- ```php artisan passport:client --personal``` ou ```php artisan passport:keys```
 - ```php artisan serve```
 6. Caso precise, dê permissão na pasta storage (opcional)
 
