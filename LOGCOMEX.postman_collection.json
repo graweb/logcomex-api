@@ -43,6 +43,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -55,12 +65,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/check_user",
+							"raw": "http://localhost/api/check_user",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "8000",
 							"path": [
 								"api",
 								"check_user"
