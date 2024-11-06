@@ -16,6 +16,7 @@ class Product extends Model
         'quantity',
         'minimum_quantity',
         'amount',
+        'minimum_amount',
         'country',
     ];
 }

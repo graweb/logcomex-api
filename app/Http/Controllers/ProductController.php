@@ -41,17 +41,38 @@ class ProductController extends Controller
                 "data" => $data->paginate(),
             ], 200);
         } else {
-            $data = $data->limit(5)->orderBy('created_at', 'desc');
+            if(filter_var($request->hasMonth, FILTER_VALIDATE_BOOLEAN)) {
+                $data = $data->limit(12)->orderBy('created_at', $request->hasOrder);
 
-            $result = [
-                'labels' => $data->pluck('name'),
-                'datasets' => [
-                    [
-                        'backgroundColor' => ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                        'data' => $data->pluck('quantity'),
+                $result = [
+                    "labels" => $data->pluck('name'),
+                    "datasets" => [
+                        [
+                            "label" => $request->hasOrder == 'desc' ? 'Quantidade atual' : 'Valor atual',
+                            "backgroundColor" => "#5b21b6",
+                            "data" => $request->hasOrder == 'desc' ? $data->pluck('quantity') : $data->pluck('amount')
+                        ],
+                        [
+                            "label" => $request->hasOrder == 'desc' ? 'Quantidade mínima' : 'Valor mínimo',
+                            "backgroundColor" => "#f44336",
+                            "data" => $request->hasOrder == 'desc' ? $data->pluck('minimum_quantity') : $data->pluck('minimum_amount')
+                        ],
+                    ]
+                ];
+            } else {
+
+                $data = $data->limit(5)->orderBy('created_at', $request->hasOrder);
+
+                $result = [
+                    'labels' => $data->pluck('country'),
+                    'datasets' => [
+                        [
+                            'backgroundColor' => ['#ede9fe', '#ddd6fe', '#c4b5fd', '#8b5cf6', '#5b21b6'],
+                            'data' => $data->pluck('quantity'),
+                        ],
                     ],
-                ],
-            ];
+                ];
+            }
 
             return response()->json($result);
         }
@@ -90,6 +111,7 @@ class ProductController extends Controller
             "quantity" => $validator->validated()['quantity'],
             'minimum_quantity' => $request->minimum_quantity,
             'amount' => $request->amount,
+            'minimum_amount' => $request->minimum_amount,
             'country' => $request->country,
         ]);
 
@@ -138,6 +160,7 @@ class ProductController extends Controller
         $product->quantity = $validator->validated()['quantity'];
         $product->minimum_quantity = $request->minimum_quantity;
         $product->amount = $request->amount;
+        $product->minimum_amount = $request->minimum_amount;
         $product->country = $request->country;
         $product->save();
 
