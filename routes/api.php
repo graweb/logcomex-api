@@ -14,6 +14,7 @@ Route::group([
 ], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
+    Route::get('check_user', [AuthController::class, 'checkUser']);
 });
 
 /**

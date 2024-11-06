@@ -80,6 +80,19 @@ class AuthController extends Controller
     }
 
     /**
+     * Check User logged
+     */
+    public function checkUser()
+    {
+        if (Auth::guard('api')->check()) {
+            $user = Auth::guard('api')->user();
+            return response()->json(['user' => $user], 200);
+        }
+
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    /**
      * Logout
      */
     public function logout(Request $request)

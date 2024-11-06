@@ -38,6 +38,38 @@
 					"response": []
 				},
 				{
+					"name": "CHECK USER LOGGED",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user@logcomex.com.br\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/check_user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"check_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "REGISTER",
 					"request": {
 						"method": "POST",
