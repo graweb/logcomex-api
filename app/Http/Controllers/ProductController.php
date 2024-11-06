@@ -20,8 +20,8 @@ class ProductController extends Controller
             $data = $data->where('code', 'like', '%'.$request->code.'%');
         }
 
-        if($request->has('product_name')) {
-            $data = $data->where('name', 'like', '%'.$request->product_name.'%');
+        if($request->has('name')) {
+            $data = $data->where('name', 'like', '%'.$request->name.'%');
         }
 
         if($request->has('description')) {
