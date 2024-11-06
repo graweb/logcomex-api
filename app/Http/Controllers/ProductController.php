@@ -54,7 +54,7 @@ class ProductController extends Controller
                         ],
                         [
                             "label" => $request->hasOrder == 'desc' ? 'Quantidade mínima' : 'Valor mínimo',
-                            "backgroundColor" => "#f44336",
+                            "backgroundColor" => "#FFA500",
                             "data" => $request->hasOrder == 'desc' ? $data->pluck('minimum_quantity') : $data->pluck('minimum_amount')
                         ],
                     ]
