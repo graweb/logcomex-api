@@ -2,7 +2,7 @@
 <img src="https://www.riverwoodcapital.com/wp-content/uploads/2024/01/logcomex-logo-website.png" width="400" alt="Logcomex">
 </p>
 
-## Configuração do Projeto (ambiente local)
+## Configuração do Projeto (ambiente local - DOCKER)
 
 Verifique se o Docker e o Docker Composer estão instalados em sua máquina
 
@@ -17,6 +17,20 @@ Verifique se o Docker e o Docker Composer estão instalados em sua máquina
 - ```php artisan migrate```
 - ```php artisan db:seed```
 5. Caso precise, dê permissão na pasta storage (opcional)
+
+## Configuração do Projeto (ambiente local - Artisan Serve)
+1. Verifique se a extensão  ext-sodium está instalada
+2. Clone o repositório e crie o arquivo .env com o comando ```.env (cp .env.example .env)```, em seguida, adicione as configurações do banco de dados
+3. Crie um banco de dados chamado logcomex
+4. Altere as configurações do banco de dados (por default o usuário é o ```root``` e a senha é null)
+5. Rode os comandos 
+- ```composer install```
+- ```php artisan key:generate``` 
+- ```php artisan passport:client --personal```
+- ```php artisan migrate```
+- ```php artisan db:seed```
+- ```php artisan serve```
+6. Caso precise, dê permissão na pasta storage (opcional)
 
 ## Postman
 - Baixe o arquivo LOGCOMEX.postman_collection.json que está na raiz do projeto e importe no Postman
